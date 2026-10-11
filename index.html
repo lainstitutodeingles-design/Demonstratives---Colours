@@ -1,0 +1,357 @@
+<title>Demonstratives &amp; Colours</title>
+<style>
+  :root{
+    --bg:#FBFAF6; --surface:#FFFFFF; --surface-2:#F4F1EA;
+    --ink:#20303A; --muted:#66757E; --line:#E7E1D5;
+    --accent:#0E7C86; --accent-soft:#DCEFEF; --coral:#E8613C;
+    --ok:#1F9D63; --ok-soft:#E1F3E9; --bad:#D2453F; --bad-soft:#FBE6E4;
+    --chip:#EFEAE0;
+    --shadow:0 1px 2px rgba(28,40,46,.06), 0 6px 20px rgba(28,40,46,.06);
+    --r:14px;
+    --serif:"Fraunces",Georgia,"Times New Roman",serif;
+    --sans:"Mulish",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --mono:"Space Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  }
+  :root:not([data-theme="light"]){
+    @media (prefers-color-scheme:dark){
+      --bg:#12181B; --surface:#1A2226; --surface-2:#222C31;
+      --ink:#E9EEF0; --muted:#9AAAB2; --line:#2C383E;
+      --accent:#4FC3CE; --accent-soft:#193338; --coral:#F0784F;
+      --ok:#4FBE85; --ok-soft:#173026; --bad:#E9736C; --bad-soft:#331d1c;
+      --chip:#2A353B; --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 22px rgba(0,0,0,.32);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12181B; --surface:#1A2226; --surface-2:#222C31;
+    --ink:#E9EEF0; --muted:#9AAAB2; --line:#2C383E;
+    --accent:#4FC3CE; --accent-soft:#193338; --coral:#F0784F;
+    --ok:#4FBE85; --ok-soft:#173026; --bad:#E9736C; --bad-soft:#331d1c;
+    --chip:#2A353B; --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 22px rgba(0,0,0,.32);
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 72px}
+
+  .top-bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%, transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding-block:10px;margin-bottom:22px}
+  .top-in{max-width:760px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:14px}
+  .top-title{font-family:var(--serif);font-weight:600;font-size:15px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .top-title b{color:var(--accent)}
+  .bar{flex:1;height:8px;border-radius:99px;background:var(--surface-2);overflow:hidden;max-width:150px}
+  .bar > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--coral));border-radius:99px;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+  .score{font-family:var(--mono);font-size:12.5px;color:var(--muted);white-space:nowrap;font-weight:700}
+  .score b{color:var(--ink)}
+  .theme{border:1px solid var(--line);background:var(--surface);color:var(--muted);width:34px;height:34px;border-radius:9px;cursor:pointer;font-size:15px;flex:none}
+  .theme:hover{color:var(--accent)}
+
+  header.hero{padding:14px 0 6px}
+  .kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--coral);font-weight:700}
+  h1{font-family:var(--serif);font-weight:600;font-size:clamp(28px,6.5vw,44px);line-height:1.04;margin:.28em 0 .14em;text-wrap:balance;letter-spacing:-.5px}
+  .lede{color:var(--muted);font-size:15px;max-width:60ch}
+  .lede b{color:var(--ink);font-weight:700}
+
+  .part-label{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:34px 4px 2px;display:flex;align-items:center;gap:10px}
+  .part-label::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  .ex{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:20px;margin-top:16px}
+  .ex.guide{border-color:var(--accent-soft);background:linear-gradient(180deg,var(--accent-soft),transparent 60%)}
+  .ex-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:4px}
+  .num{font-family:var(--serif);font-weight:600;font-size:16px;color:#fff;background:var(--accent);min-width:40px;height:34px;border-radius:10px;display:grid;place-items:center;flex:none;padding:1px 6px 0}
+  .num.g{background:var(--coral)}
+  .ex-inst{font-weight:800;font-size:15.5px}
+  .ex-inst.big{font-family:var(--serif);font-weight:600;font-size:18px}
+  .ex-note{color:var(--muted);font-size:13px;margin-top:1px}
+  .ex-titles{flex:1;min-width:0}
+
+  .gbody{margin-top:10px;font-size:14.8px;line-height:1.65}
+  .gbody p{margin:0 0 7px}.gbody b{color:var(--accent)}
+  .grid-dem{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+  .demcell{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:8px 11px;font-size:14px}
+  .demcell b{color:var(--accent)}
+  .eg{background:var(--surface-2);border-left:3px solid var(--coral);padding:7px 12px;border-radius:0 8px 8px 0;margin:6px 0;font-size:14.5px}.eg b{color:var(--accent)}
+
+  ol.items{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:11px;counter-reset:it}
+  ol.items > li{counter-increment:it;display:flex;gap:10px;align-items:baseline;font-size:15.5px;flex-wrap:wrap}
+  ol.items > li::before{content:counter(it);font-family:var(--mono);font-size:12px;color:var(--muted);font-weight:700;min-width:16px;text-align:right;flex:none;transform:translateY(-1px)}
+  .line{flex:1;min-width:220px;display:flex;flex-wrap:wrap;align-items:baseline;gap:6px}
+
+  input.blank{font-family:var(--sans);font-size:15px;color:var(--ink);background:var(--surface-2);border:1.5px solid var(--line);border-bottom-color:var(--accent);border-radius:8px;padding:5px 9px;min-width:70px;max-width:100%}
+  input.blank:focus{outline:none;border-color:var(--accent);background:var(--surface)}
+  input.tiny{min-width:110px;max-width:200px}
+  input.correct{border-color:var(--ok);background:var(--ok-soft)}
+  input.incorrect{border-color:var(--bad);background:var(--bad-soft)}
+  .sol{font-size:12.5px;font-family:var(--mono);color:var(--ok);font-weight:700}
+  .mark{font-weight:900;font-size:14px;margin-left:2px}.mark.ok{color:var(--ok)}.mark.no{color:var(--bad)}
+
+  .pills{display:inline-flex;gap:4px;background:var(--surface-2);padding:3px;border-radius:9px;border:1.5px solid var(--line);vertical-align:middle;flex-wrap:wrap}
+  .pills.correct{border-color:var(--ok)}.pills.incorrect{border-color:var(--bad)}
+  .pills button{font-family:var(--sans);font-size:14px;font-weight:700;color:var(--muted);background:transparent;border:0;padding:4px 11px;border-radius:6px;cursor:pointer;transition:.12s}
+  .pills button:hover{color:var(--ink)}
+  .pills button[aria-pressed="true"]{background:var(--accent);color:#fff;box-shadow:var(--shadow)}
+  .pills.incorrect button[aria-pressed="true"]{background:var(--bad);color:#fff}
+  .pills.correct button[aria-pressed="true"]{background:var(--ok);color:#fff}
+
+  .word{font-weight:800}.given{color:var(--accent);font-weight:800}
+  .ex-tag{font-size:11px;font-family:var(--mono);color:var(--muted);background:var(--chip);padding:1px 7px;border-radius:6px;align-self:center}
+
+  /* colours */
+  .swgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+  .swrow{display:flex;align-items:center;gap:10px;background:var(--surface-2);border:1px solid var(--line);border-radius:11px;padding:10px}
+  .swatch{width:58px;height:42px;border-radius:9px;border:1.5px solid rgba(0,0,0,.18);flex:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+  .swrow.big .swatch{width:70px;height:50px}
+  .swrow .pills{flex:1}
+
+  .ex-foot{display:flex;align-items:center;gap:10px;margin-top:16px;padding-top:13px;border-top:1px dashed var(--line);flex-wrap:wrap}
+  .btn{font-family:var(--sans);font-weight:800;font-size:14px;border-radius:10px;cursor:pointer;padding:9px 18px;border:0;transition:.15s}
+  .btn.check{background:var(--accent);color:#fff}.btn.check:hover{filter:brightness(1.07)}
+  .btn.reset{background:transparent;color:var(--muted);border:1.5px solid var(--line);padding:8px 14px}
+  .btn.reset:hover{color:var(--ink);border-color:var(--muted)}
+  .result{font-family:var(--mono);font-size:13px;font-weight:700;margin-left:auto;padding:5px 12px;border-radius:8px;opacity:0;transition:.2s}
+  .result.show{opacity:1}.result.good{background:var(--ok-soft);color:var(--ok)}
+  .result.mid{background:#FBF1DF;color:#B77A18}
+  :root[data-theme="dark"] .result.mid{background:#3a2f18;color:#E5B845}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .result.mid{background:#3a2f18;color:#E5B845}}
+  .result.low{background:var(--bad-soft);color:var(--bad)}
+
+  .closer{margin-top:30px;text-align:center;color:var(--muted);font-size:13px}
+  a.credit{color:var(--accent);text-decoration:none;font-weight:700}
+  @media (max-width:460px){.ex{padding:16px 14px} .line{min-width:100%} .swgrid{grid-template-columns:1fr} .grid-dem{grid-template-columns:1fr}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="top-bar"><div class="top-in">
+  <span class="top-title"><b>La Academia</b> · Demonstratives &amp; Colours</span>
+  <div class="bar"><i id="gbar"></i></div>
+  <span class="score" id="gscore"><b>0</b>/0</span>
+  <button class="theme" id="theme" aria-label="Cambiar tema">◐</button>
+</div></div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="kicker">English · Grammar &amp; Vocabulary</div>
+    <h1>Demonstratives &amp; colours</h1>
+    <p class="lede">Dos temas en una página: <b>this / that / these / those</b> y los <b>colores</b> (con cuadritos de color reales). Resolvé y tocá <b>Comprobar</b>: te corrige y te muestra la respuesta. 🎨</p>
+  </header>
+
+  <div id="board"></div>
+
+  <div class="closer">
+    <p>¡Bien hecho! Reintentá los ejercicios con menos aciertos.</p>
+    <button class="btn check" id="checkAll">Comprobar todo</button>
+    <p style="margin-top:16px">Material interactivo · <a class="credit" href="#">La Academia — Instituto de Inglés</a></p>
+  </div>
+</div>
+
+<script>
+const PA="Demonstrative adjectives", PB="Colours";
+
+const EX=[
+/* ===== Demonstratives ===== */
+{part:PA,type:"guide",icon:"i",big:true,inst:"this / that / these / those — recordá",
+ html:`<div class="gbody">
+   <div class="grid-dem">
+     <div class="demcell"><b>this</b> → 1 cosa CERCA<br><span style="color:var(--muted)">this book (aquí)</span></div>
+     <div class="demcell"><b>that</b> → 1 cosa LEJOS<br><span style="color:var(--muted)">that book (allá)</span></div>
+     <div class="demcell"><b>these</b> → VARIAS cerca<br><span style="color:var(--muted)">these books (aquí)</span></div>
+     <div class="demcell"><b>those</b> → VARIAS lejos<br><span style="color:var(--muted)">those books (allá)</span></div>
+   </div>
+   <div class="eg" style="margin-top:10px"><b>This</b> coffee (here) is hot. · <b>Those</b> shoes (over there) are nice.</div>
+ </div>`},
+
+{part:PA,num:"1",type:"choose",inst:"Choose this, that, these or those.",note:"",
+ items:[
+  {seg:[{o:["This","That"],a:"This"}," book here is interesting."]},
+  {seg:[{o:["these","those"],a:"those"}," shoes over there are new."]},
+  {seg:["Look at ",{o:["these","those"],a:"those"}," stars in the sky!"]},
+  {seg:[{o:["This","That"],a:"This"}," is my bag here."]},
+  {seg:["Do you like ",{o:["this","that"],a:"this"}," jacket I'm wearing?"]},
+  {seg:[{o:["These","Those"],a:"Those"}," houses over there are big."]},
+  {seg:["Who is ",{o:["this","that"],a:"that"}," man over there?"]},
+  {seg:["How much are ",{o:["these","those"],a:"these"}," apples here?"]},
+ ]},
+
+{part:PA,num:"2",type:"fill",inst:"Write this, that, these or those. Use the clue.",note:"",
+ items:[
+  {seg:[{a:["this"]}," pen ",{tag:"here · 1"}]},
+  {seg:[{a:["those"]}," books ",{tag:"there · many"}]},
+  {seg:[{a:["these"]}," apples ",{tag:"here · many"}]},
+  {seg:[{a:["that"]}," car ",{tag:"there · 1"}]},
+  {seg:[{a:["this"]}," chair ",{tag:"here · 1"}]},
+  {seg:[{a:["those"]}," people ",{tag:"there · many"}]},
+ ]},
+
+{part:PA,num:"3",type:"rewrite",inst:"Make it plural.",note:"Ej: this book → these books",
+ items:[
+  {q:"this book", ans:["these books"], given:"these books"},
+  {q:"that dog", ans:["those dogs"]},
+  {q:"this box", ans:["these boxes"]},
+  {q:"that woman", ans:["those women"]},
+  {q:"this photo", ans:["these photos"]},
+  {q:"that child", ans:["those children"]},
+ ]},
+
+/* ===== Colours ===== */
+{part:PB,num:"4",type:"colorname",inst:"What colour is it? Write the colour.",note:"Mirá el cuadrito y escribí el color en inglés.",
+ items:[
+  {hex:"#E23B3B", a:["red"]},
+  {hex:"#2F6FE0", a:["blue"]},
+  {hex:"#2FAF5A", a:["green"]},
+  {hex:"#F2C531", a:["yellow"]},
+  {hex:"#EF7D2E", a:["orange"]},
+  {hex:"#8A4FBE", a:["purple"]},
+  {hex:"#E86AA6", a:["pink"]},
+  {hex:"#8A5A2B", a:["brown"]},
+ ]},
+
+{part:PB,num:"5",type:"colormc",inst:"Choose the correct colour.",note:"",
+ items:[
+  {hex:"#2FAF5A", o:["red","green","blue"], a:"green"},
+  {hex:"#8A4FBE", o:["pink","brown","purple"], a:"purple"},
+  {hex:"#8A9199", o:["grey","black","white"], a:"grey"},
+  {hex:"#F2C531", o:["orange","yellow","white"], a:"yellow"},
+  {hex:"#000000", o:["grey","black","blue"], a:"black"},
+ ]},
+
+{part:PB,num:"6",type:"fill",inst:"Complete with the correct colour.",note:"",
+ items:[
+  {seg:["The sky is ",{a:["blue"]}," on a sunny day."]},
+  {seg:["Grass and plants are ",{a:["green"]},"."]},
+  {seg:["A banana is ",{a:["yellow"]},"."]},
+  {seg:["Snow is ",{a:["white"]},"."]},
+  {seg:["At night, the sky is ",{a:["black","dark"]},"."]},
+  {seg:["Tomatoes and strawberries are ",{a:["red"]},"."]},
+  {seg:["Chocolate and coffee are ",{a:["brown"]},"."]},
+ ]},
+
+{part:PB,num:"7",type:"choose",inst:"Demonstratives + colours. Choose the correct word.",note:"Repasamos los dos temas juntos.",
+ items:[
+  {seg:["Look at ",{o:["this","these"],a:"these"}," ",{sw:"#E23B3B"}," red flowers here."]},
+  {seg:[{o:["That","Those"],a:"That"}," ",{sw:"#2F6FE0"}," blue car over there is fast."]},
+  {seg:["How much are ",{o:["these","those"],a:"those"}," ",{sw:"#2FAF5A"}," green shoes over there?"]},
+  {seg:["I like ",{o:["this","these"],a:"this"}," ",{sw:"#F2C531"}," yellow bag here."]},
+ ]},
+];
+
+/* ===== engine ===== */
+const norm = s => (s||"").toString().toLowerCase().replace(/[’‘`]/g,"'").replace(/'/g,"")
+  .replace(/[-–—/]/g," ").replace(/[^a-z0-9 ]/g,"").replace(/\s+/g," ").trim();
+let uid=0; const nid=()=>"c"+(++uid);
+const board=document.getElementById('board');
+
+function blank(ans,cls,ph){
+  const id=nid();
+  return `<input class="blank ${cls||'tiny'} gradable" id="${id}" data-kind="text" data-ans='${JSON.stringify(ans.map(norm))}' data-first="${ans[0].replace(/"/g,'&quot;')}" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${ph||''}">`;
+}
+function pills(opts,ans){
+  const id=nid();
+  const btns=opts.map(o=>`<button type="button" data-v="${o.replace(/"/g,'&quot;')}">${o}</button>`).join("");
+  return `<span class="pills gradable" id="${id}" data-kind="pill" data-ans='${JSON.stringify([norm(ans)])}' data-first="${ans.replace(/"/g,'&quot;')}">${btns}</span>`;
+}
+const swatch = hex => `<span class="swatch" style="background:${hex}"></span>`;
+
+let lastPart="";
+EX.forEach(ex=>{
+  if(ex.part!==lastPart){ const pl=document.createElement('div'); pl.className='part-label'; pl.innerHTML=ex.part; board.appendChild(pl); lastPart=ex.part; }
+  const card=document.createElement('section'); card.className='ex'+(ex.type==='guide'?' guide':'');
+  const numCls=ex.type==='guide'?'num g':'num'; const label=ex.type==='guide'?ex.icon:ex.num;
+  let inner=`<div class="ex-head"><div class="${numCls}">${label}</div><div class="ex-titles"><div class="ex-inst${ex.big?' big':''}">${ex.inst}</div>${ex.note?`<div class="ex-note">${ex.note}</div>`:''}</div></div>`;
+
+  if(ex.type==="guide"){ inner+=ex.html; }
+  else if(ex.type==="rewrite"){
+    inner+=`<ol class="items">`;
+    ex.items.forEach(it=>{
+      inner+=`<li><div class="line"><span class="word">${it.q}</span> →&nbsp;`;
+      inner+= it.given ? `<span class="given">${it.given}</span> <span class="ex-tag">ej.</span>` : blank(it.ans,'tiny');
+      inner+=`</div></li>`;
+    });
+    inner+=`</ol>`;
+  }
+  else if(ex.type==="fill"){
+    inner+=`<ol class="items">`;
+    ex.items.forEach(it=>{
+      inner+=`<li><div class="line" style="justify-content:flex-start">`;
+      it.seg.forEach(p=>{ if(typeof p==="string") inner+=`<span>${p}</span>`; else if(p.tag) inner+=`<span class="ex-tag">${p.tag}</span>`; else inner+=blank(p.a,'tiny'); });
+      inner+=`</div></li>`;
+    });
+    inner+=`</ol>`;
+  }
+  else if(ex.type==="choose"){
+    inner+=`<ol class="items">`;
+    ex.items.forEach(it=>{
+      inner+=`<li><div class="line">`;
+      it.seg.forEach(p=>{ if(typeof p==="string") inner+=`<span>${p}</span>`; else if(p.sw) inner+=swatch(p.sw); else inner+=pills(p.o,p.a); });
+      inner+=`</div></li>`;
+    });
+    inner+=`</ol>`;
+  }
+  else if(ex.type==="colorname"){
+    inner+=`<div class="swgrid">`;
+    ex.items.forEach(it=>{ inner+=`<div class="swrow">${swatch(it.hex)}${blank(it.a,'tiny')}</div>`; });
+    inner+=`</div>`;
+  }
+  else if(ex.type==="colormc"){
+    inner+=`<div class="swgrid">`;
+    ex.items.forEach(it=>{ inner+=`<div class="swrow big">${swatch(it.hex)}${pills(it.o,it.a)}</div>`; });
+    inner+=`</div>`;
+  }
+
+  if(ex.type!=="guide"){
+    inner+=`<div class="ex-foot"><button class="btn check">Comprobar</button><button class="btn reset">Reintentar</button><span class="result">—</span></div>`;
+  }
+  card.innerHTML=inner;
+  board.appendChild(card);
+});
+
+board.addEventListener('click',e=>{
+  const b=e.target.closest('.pills button'); if(!b) return;
+  const g=b.closest('.pills'); g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));
+  g.dataset.value=b.dataset.v; g.classList.remove('correct','incorrect');
+});
+function valOf(el){ return el.dataset.kind==='pill' ? (el.dataset.value||"") : (el.value||""); }
+function isRight(el){ return JSON.parse(el.dataset.ans).includes(norm(valOf(el))); }
+function clearMark(el){
+  el.classList.remove('correct','incorrect');
+  let s=el.nextElementSibling;
+  while(s && (s.classList.contains('mark')||s.classList.contains('sol'))){ const r=s; s=s.nextElementSibling; r.remove(); }
+}
+function checkCard(card){
+  const gs=[...card.querySelectorAll('.gradable')]; let ok=0;
+  gs.forEach(el=>{
+    clearMark(el);
+    const right=isRight(el);
+    el.classList.add(right?'correct':'incorrect');
+    const mark=document.createElement('span'); mark.className='mark '+(right?'ok':'no'); mark.textContent=right?' ✓':' ✗';
+    el.after(mark);
+    if(!right){ const sol=document.createElement('span'); sol.className='sol'; sol.textContent=' → '+(el.dataset.first||""); mark.after(sol); }
+    if(right) ok++;
+  });
+  const res=card.querySelector('.result'); const total=gs.length, pct=total?ok/total:0;
+  res.textContent=`${ok}/${total}`; res.className='result show '+(pct===1?'good':pct>=0.5?'mid':'low');
+  updateGlobal(); return {ok,total};
+}
+function resetCard(card){
+  card.querySelectorAll('.gradable').forEach(el=>{
+    clearMark(el);
+    if(el.dataset.kind==='pill'){ el.dataset.value=''; el.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed','false')); }
+    else el.value='';
+  });
+  card.querySelector('.result').className='result'; updateGlobal();
+}
+board.addEventListener('click',e=>{
+  if(e.target.classList.contains('check')) checkCard(e.target.closest('.ex'));
+  if(e.target.classList.contains('reset')) resetCard(e.target.closest('.ex'));
+});
+const gbar=document.getElementById('gbar'), gscore=document.getElementById('gscore');
+function updateGlobal(){
+  const all=[...document.querySelectorAll('.gradable')];
+  const total=all.length, done=all.filter(el=>el.classList.contains('correct')).length;
+  gbar.style.width=(total?done/total*100:0)+'%'; gscore.innerHTML=`<b>${done}</b>/${total}`;
+}
+document.getElementById('checkAll').addEventListener('click',()=>{ document.querySelectorAll('.ex').forEach(c=>{ if(c.querySelector('.gradable')) checkCard(c); }); window.scrollTo({top:0,behavior:'smooth'}); });
+const root=document.documentElement;
+document.getElementById('theme').addEventListener('click',()=>{
+  const cur=root.getAttribute('data-theme');
+  const isDark = cur ? cur==='dark' : matchMedia('(prefers-color-scheme:dark)').matches;
+  root.setAttribute('data-theme', isDark?'light':'dark');
+});
+updateGlobal();
+</script>
